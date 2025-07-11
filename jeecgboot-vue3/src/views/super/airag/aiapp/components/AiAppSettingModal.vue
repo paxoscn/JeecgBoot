@@ -252,6 +252,22 @@
                         </div>
                       </a-form-item>
                     </a-row>
+                    <a-row>
+                      <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" v-bind="validateInfos.asrEnabled">
+                        <div style="display: flex;margin-top: 10px">
+                          <div style="margin-left: 2px">是否启用语音转文字：</div>
+                          <a-switch :disabled="isRelease" v-model:checked="asrEnabledChecked" checked-children="开" un-checked-children="关" @change="handleAsrEnabledChange"></a-switch>
+                        </div>
+                      </a-form-item>
+                    </a-row>
+                    <a-row>
+                      <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" v-bind="validateInfos.ttsEnabled">
+                        <div style="display: flex;margin-top: 10px">
+                          <div style="margin-left: 2px">是否启用文字转语音：</div>
+                          <a-switch :disabled="isRelease" v-model:checked="ttsEnabledChecked" checked-children="开" un-checked-children="关" @change="handleTtsEnabledChange"></a-switch>
+                        </div>
+                      </a-form-item>
+                    </a-row>
                   </div>
                 </a-col>
               </a-row>
@@ -381,6 +397,10 @@
       const { createMessage } = useMessage();
       //多会话模式选中状态
       const multiSessionChecked = ref<boolean>(true);
+      //是否启用语音转文字选中状态
+      const asrEnabledChecked = ref<boolean>(true);
+      //是否启用文字转语音选中状态
+      const ttsEnabledChecked = ref<boolean>(true);
       // 是否已发布
       const isRelease = ref<boolean>(false);
       //注册modal
@@ -806,6 +826,8 @@
           quickCommandList.value = parse;
           //update-end---author:wangshuai---date:2025-04-08---for:【QQYUN-11939】ai应用 快捷指令 修改保存以后，再次打开还是原来的---
         }
+        asrEnabledChecked.value = data.asrEnabled;
+        ttsEnabledChecked.value = data.ttsEnabled;
         //赋值
         Object.assign(formState, data);
         //根据知识库id查询知识库内容
@@ -916,6 +938,22 @@
         formState.metadata = JSON.stringify(metadata.value);
       }
 
+      function handleAsrEnabledChange(checked){
+        if(checked){
+          formState.asrEnabled = "true";
+        }else{
+          formState.asrEnabled = "false";
+        }
+      }
+
+      function handleTtsEnabledChange(checked){
+        if(checked){
+          formState.ttsEnabled = "true";
+        }else{
+          formState.ttsEnabled = "false";
+        }
+      }
+
       return {
         registerModal,
         title,
@@ -977,7 +1015,11 @@
         getFlowImage,
         metadata,
         multiSessionChecked,
+        asrEnabledChecked,
+        ttsEnabledChecked,
         handleMultiSessionChange,
+        handleAsrEnabledChange,
+        handleTtsEnabledChange,
       };
     },
   };

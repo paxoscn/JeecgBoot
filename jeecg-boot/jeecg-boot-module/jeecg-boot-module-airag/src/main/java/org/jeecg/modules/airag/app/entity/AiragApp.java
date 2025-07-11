@@ -153,20 +153,29 @@ public class AiragApp implements Serializable {
     @Schema(description = "快捷指令")
     private java.lang.String quickCommand;
     /**
+     * 是否启用语音转文字
+     */
+    @Excel(name = "是否启用语音转文字", width = 15)
+    @Schema(description = "是否启用语音转文字")
+    private java.lang.Boolean asrEnabled;
+    /**
+     * 是否启用文字转语音
+     */
+    @Excel(name = "是否启用文字转语音", width = 15)
+    @Schema(description = "是否启用文字转语音")
+    private java.lang.Boolean ttsEnabled;
+    /**
      * 状态（enable=启用、disable=禁用、release=发布）
      */
     @Excel(name = "状态", width = 15)
     @Schema(description = "状态")
     private java.lang.String status;
-
-
     /**
      * 元数据
      */
     @Excel(name = "元数据", width = 15)
     @Schema(description = "元数据")
     private java.lang.String metadata;
-
     /**
      * 知识库ids
      */
